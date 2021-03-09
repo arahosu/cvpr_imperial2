@@ -1,3 +1,5 @@
+clc;clear;
+
 load('F0_PVT.mat');
 
 colours = {'c', 'r', 'g', 'b', 'm', 'k'};
