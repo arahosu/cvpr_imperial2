@@ -1,3 +1,5 @@
+clc;clear;
+
 files = dir('data/*.mat');
 
 data = struct;

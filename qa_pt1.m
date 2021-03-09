@@ -1,3 +1,5 @@
+clc;clear;
+
 files = {'data/acrylic_211_01_HOLD.mat', 'data/car_sponge_101_01_HOLD.mat'};
 
 figure();
