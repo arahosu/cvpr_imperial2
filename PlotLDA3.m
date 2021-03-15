@@ -12,11 +12,13 @@ function [Mdl] = PlotLDA3(X, label, variables, names)
     K = Mdl.Coeffs(1,2).Const;
     L = Mdl.Coeffs(1,2).Linear;
     
+    hold on;
+    
     f = @(x1,x2) K + L(1)*x1 + L(2)*x2;
     fs = fsurf(f);
     fs.EdgeColor = 'b';
     fs.FaceColor = 'b';
     fs.FaceAlpha = 0.25;
-    fs.DisplayName = sprintf('Hyperplane between %s & %s', char(names(1)), char(names(2)));
+    fs.DisplayName = sprintf('Hyperplane between %s %s & %s', char(10), char(names(1)), char(names(2)));
 
 end
