@@ -1,7 +1,7 @@
 function [Mdl] = PlotLDA(X, label, variables)
     figure;
-    scatter(X(1:10,1), X(1:10,2), 'r'); hold on
-    scatter(X(11:20,1), X(11:20,2), 'g');
+    scatter(X(1:10,1), X(1:10,2), 10, 'r', 'filled'); hold on
+    scatter(X(11:20,1), X(11:20,2), 10, 'g', 'filled');
     xlabel(variables(1));
     ylabel(variables(2));
     legend({'black foam', 'car sponge'}, 'Location', 'southeast');
