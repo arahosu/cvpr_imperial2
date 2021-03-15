@@ -9,14 +9,13 @@ function [Mdl] = PlotLDA3(X, label, variables, names)
     
     % Fit LDA
     Mdl = fitcdiscr(X,label);
-    K = Mdl.Coeffs(1,2).Const;
-    L = Mdl.Coeffs(1,2).Linear;
+    K1 = Mdl.Coeffs(1,2).Const;
+    L1 = Mdl.Coeffs(1,2).Linear;
     
-    f = @(x1,x2) K + L(1)*x1 + L(2)*x2;
-    fs = fsurf(f);
+    f1 = @(x1,x2, x3) K1 + L1(1)*x1 + L1(2)*x2 + L1(3)*x3;
+    fs = fimplicit3(f1);
     fs.EdgeColor = 'b';
     fs.FaceColor = 'b';
     fs.FaceAlpha = 0.25;
-    fs.DisplayName = sprintf('Hyperplane between %s & %s', char(names(1)), char(names(2)));
-
+    fs.DisplayName = sprintf('Hyperplane between \n %s & %s', char(names(1)), char(names(2)));
 end
