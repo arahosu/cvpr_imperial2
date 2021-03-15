@@ -27,19 +27,19 @@ MdlVT = PlotLDA(X3, label, {'normalised vibration', 'normalised temperature'});
 MdlPVT = PlotLDA3(X, label, {'normalised pressure', 'normalised vibration', 'normalised temperature'},...
                   {'black foam', 'car sponge'});
 
-% % Get data of car sponge and kitchen sponge
-% car_sponge_data = concat_data(21:30,:);
-% kitchen_sponge_data = concat_data(41:50,:);
-% new_data = vertcat(car_sponge_data, kitchen_sponge_data);
-% new_label = {};
-% new_label(1:10,1) = {'car sponge'};
-% new_label(11:20,1) = {'kitchen sponge'};
-% 
-% % Get a 3D LDA plot of acrylic and steel vase data
-% PlotLDA([new_data(:,1), new_data(:,2)], label, {'normalised pressure', 'normalised vibration'});
-% PlotLDA([new_data(:,1), new_data(:,3)], label, {'normalised pressure', 'normalised temperature'});
-% PlotLDA([new_data(:,2), new_data(:,3)], label, {'normalised vibration', 'normalised temperature'});
-% 
-% MdlPVT_AS = PlotLDA3(new_data, label,...
-%                      {'normalised pressure', 'normalised vibration', 'normalised temperature'},...
-%                      {'car sponge', 'kitchen sponge'});
+% Get data of kitchen sponge
+kitchen_sponge_data = concat_data(41:50,:);
+new_data = vertcat(car_sponge_data, kitchen_sponge_data);
+new_label = {};
+new_label(1:10,1) = {'car sponge'};
+new_label(11:20,1) = {'kitchen sponge'};
+
+% Get a 3D LDA plot of acrylic and steel vase data
+PlotLDA([new_data(:,1), new_data(:,2)], new_label, {'normalised pressure', 'normalised vibration'});
+PlotLDA([new_data(:,1), new_data(:,3)], new_label, {'normalised pressure', 'normalised temperature'});
+PlotLDA([new_data(:,2), new_data(:,3)], new_label, {'normalised vibration', 'normalised temperature'});
+
+MdlPVT_AS = PlotLDA3(new_data, new_label,...
+                     {'normalised pressure', 'normalised vibration', 'normalised temperature'},...
+                     {'car sponge', 'kitchen sponge'});
+

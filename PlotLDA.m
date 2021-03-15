@@ -8,10 +8,12 @@ function [Mdl] = PlotLDA(X, label, variables)
 
     % Fit LDA
     Mdl = fitcdiscr(X,label);
-    K = Mdl.Coeffs(1,2).Const;
-    L = Mdl.Coeffs(1,2).Linear;
-
-    f = @(x1,x2) K + L(1)*x1 + L(2)*x2;
+    K1 = Mdl.Coeffs(1,2).Const;
+    L1 = Mdl.Coeffs(1,2).Linear;
+    disp(K1);
+    disp(L1);
+    
+    f = @(x1,x2) K1 + L1(1)*x1 + L1(2)*x2;
     h2 = fimplicit(f);
     h2.Color = 'b';
     h2.LineWidth = 2;
