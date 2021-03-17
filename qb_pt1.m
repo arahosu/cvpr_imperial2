@@ -38,20 +38,21 @@ legend({'acrylic vase', 'black foam', 'car sponge',...
         'pc1', 'pc2', 'pc3'});
 axis equal
 
-newdata = V * concat_data';
-newdata = newdata';
+newdata = concat_data * V;
+% newdata = newdata';
 
 variance = D / sum(D(:));
+variance_2 = var(newdata)/sum(var(newdata));
 
 % plot the transformed data
 figure;
 
 for i=1:length(colours)
-    scatter(newdata(1+10*(i-1):10*i,3),newdata(1+10*(i-1):10*i,2),10,colours{i});
+    scatter(newdata(1+10*(i-1):10*i,1),newdata(1+10*(i-1):10*i,2),10,colours{i});
     hold on
 end
 
-xlabel('PC3');
+xlabel('PC1');
 ylabel('PC2');
 
 % plot the data across PCs as 1D plots
