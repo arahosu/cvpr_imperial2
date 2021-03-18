@@ -14,54 +14,55 @@ covMatrix = cov(concat_data);
 [V,D] = eig(covMatrix);
 
 % plot the data on the new coordinates
-figure;
-ax = axes();
-view(ax, 3)
-hold(ax, 'on')
+subplot(2,2,[1,3]);
 
 for i=1:length(colours)
-    scatter3(concat_data(1+10*(i-1):10*i,1),concat_data(1+10*(i-1):10*i,2),concat_data(1+10*(i-1):10*i,3),10,colours{i});
+    scatter3(concat_data(1+10*(i-1):10*i,1),concat_data(1+10*(i-1):10*i,2),concat_data(1+10*(i-1):10*i,3),10,colours{i},'filled');
     hold on
 end
 
 line([0 V(1,1)],[0 V(2,1)],[0 V(3,1)],...
     'Color',[0.8 0.5 0.3],...
-    'LineWidth',0.75);
+    'LineWidth',1.0);
 line([0 V(1,2)],[0 V(2,2)], [0 V(3,2)],...
     'Color',[0.5 0.8 0.3],...
-    'LineWidth',0.75);
+    'LineWidth',1.0);
 line([0 V(1,3)],[0 V(2,3)], [0 V(3,3)],...
     'Color',[0.3 0.5 0.8],...
-    'LineWidth',0.75);
+    'LineWidth',1.0);
+title('(a)');
+xlabel('standardised pressure');
+ylabel('standardised vibration');
+zlabel('standardised temperature');
 legend({'acrylic vase', 'black foam', 'car sponge',...
         'flour sack', 'kitchen sponge', 'steel vase',...
         'pc1', 'pc2', 'pc3'});
 axis equal
 
 newdata = concat_data * V;
-% newdata = newdata';
-
 variance = D / sum(D(:));
-variance_2 = var(newdata)/sum(var(newdata));
 
 % plot the transformed data
-figure;
-
+subplot(2,2,2);
 for i=1:length(colours)
-    scatter(newdata(1+10*(i-1):10*i,1),newdata(1+10*(i-1):10*i,2),10,colours{i});
+    scatter(newdata(1+10*(i-1):10*i,2),newdata(1+10*(i-1):10*i,3),10,colours{i}, 'filled');
     hold on
 end
 
-xlabel('PC1');
-ylabel('PC2');
+xlabel('PC2');
+ylabel('PC3');
+title('(b)');
 
 % plot the data across PCs as 1D plots
-
-figure;
+subplot(2,2,4);
+pc_plots = [];
 for j=1:3
-    subplot(3,1,j);
-    for i=1:length(colours)
-        scatter(newdata(1+10*(i-1):10*i,j), zeros(10,1), 10,colours{i});
-        hold on
-    end
+    pc_plots(end+1) = scatter(newdata(:,j), 0.*newdata(:,j)+0.5*(j-1), 10, 'filled'); hold on
+    scatter([-std(newdata(:,j)), std(newdata(:,j))],[0.5*(j-1), 0.5*(j-1)], 50, 'k', 'x', 'LineWidth', 1.5);
+    dummy_plot = scatter(NaN, NaN, 'k', 'x', 'LineWidth', 1.5);
 end
+
+pc_plots(end+1) = dummy_plot;
+legend(pc_plots, {'pc1', 'pc2', 'pc3', '$\mu \pm \sigma$'}, 'Interpreter', 'latex');
+title('(c)');
+
