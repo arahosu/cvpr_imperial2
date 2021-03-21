@@ -1,4 +1,4 @@
-clc; clear;
+clc; clear; 
 
 load('F0_PVT.mat');
 colours = {'c', 'r', 'g', 'b', 'm', 'k'};
@@ -8,19 +8,21 @@ concat_data = concat_data';
 % Normalise the columns of the data
 concat_data = normalize(concat_data, 1);
 
-% compute the covariance matrix of the data
-covMatrix = cov(concat_data);
-% compute the eigenvectors V and eigenvalues D from the covariance matrix
-[V,D] = eig(covMatrix);
+
+covMatrix = cov(concat_data); % compute the covariance matrix of the data
+[V,D] = eig(covMatrix); % compute the eigenvectors V and eigenvalues D from the covariance matrix
+V = fliplr(V); % sort by size of PCs
+pcs = (concat_data * V)';
+
+figure;
 
 % plot the data on the new coordinates
-figure;
-ax = axes();
-view(ax, 3)
-hold(ax, 'on')
-
+subplot(2,3,[1 2]);
 for i=1:length(colours)
-    scatter3(concat_data(1+10*(i-1):10*i,1),concat_data(1+10*(i-1):10*i,2),concat_data(1+10*(i-1):10*i,3),10,colours{i});
+    x = concat_data(1+10*(i-1):10*i,1);
+    y = concat_data(1+10*(i-1):10*i,2);
+    z = concat_data(1+10*(i-1):10*i,3);
+    scatter3(x, y, z, 10, colours{i}, 'filled');
     hold on
 end
 
@@ -38,16 +40,12 @@ legend({'acrylic vase', 'black foam', 'car sponge',...
         'pc1', 'pc2', 'pc3'});
 axis equal
 
-newdata = V * concat_data';
-newdata = newdata';
-
-variance = D / sum(D(:));
+newdata = pcs';
 
 % plot the transformed data
-figure;
-
+subplot(2,3,3);
 for i=1:length(colours)
-    scatter(newdata(1+10*(i-1):10*i,3),newdata(1+10*(i-1):10*i,2),10,colours{i});
+    scatter(newdata(1+10*(i-1):10*i,3),newdata(1+10*(i-1):10*i,2),10,colours{i}, 'filled');
     hold on
 end
 
@@ -56,11 +54,20 @@ ylabel('PC2');
 
 % plot the data across PCs as 1D plots
 
-figure;
+
 for j=1:3
-    subplot(3,1,j);
+    subplot(2,3,j+3);
     for i=1:length(colours)
-        scatter(newdata(1+10*(i-1):10*i,j), zeros(10,1), 10,colours{i});
+        scatter(newdata(1+10*(i-1):10*i,j), zeros(10,1), 10,colours{i}, 'filled');
         hold on
     end
 end
+
+subplot(2,3,4);
+title("PC1")
+
+subplot(2,3,5);
+title("PC2")
+
+subplot(2,3,6);
+title("PC3")

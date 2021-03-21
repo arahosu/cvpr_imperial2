@@ -41,7 +41,7 @@ test_norm = (test - train_mean);
 
 test_std = [];
 for i = 1:size(test,1)
-   test_std(end+1, :) = sigma;
+    test_std(end+1, :) = sigma;
 end
 
 train_norm = train_norm ./ train_std;
