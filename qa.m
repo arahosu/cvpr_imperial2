@@ -1,4 +1,4 @@
-clc;clear;
+clc;clear; close("all")
 
 %% Part 1
 files = dir('data/*.mat');
@@ -10,7 +10,7 @@ idx = 1;
 dummy_plots = [];
 
 for i=1:10:length(files)
-    A = load(files(i).name);
+    A = load(['data/' files(i).name]);
     vibration = A.F0pac(2,1:1000);
     pressure = A.F0pdc(1,1:1000); 
     temperature = A.F0tdc(1,1:1000); 
@@ -36,7 +36,7 @@ hold off
 subplot(2,2,2);
 idx = 1;
 for i=1:10:length(files)
-    A = load(files(i).name);
+    A = load(['data/' files(i).name]);
     electrodes = A.F0Electrodes;
     for j=1:size(electrodes,1)
         plot(electrodes(j,1:end), 'Color', colours{idx}); hold on
@@ -67,7 +67,7 @@ electrodes_data = struct;
 electrodes_data.impedances = [];
 
 for i=1:length(files)
-    A = load(files(i).name);
+    A = load(['data/' files(i).name]);
     data.vibrations = [data.vibrations, A.F0pac(2,33)];
     data.pressures = [data.pressures, A.F0pdc(1,33)];
     data.temperatures =  [data.temperatures, A.F0tdc(1,33)];
@@ -91,6 +91,6 @@ xlabel('Pressure');
 ylabel('Vibration');
 zlabel('Temperature');
 title('(c)');
-legend({'acrylic vase', 'black foam', 'car sponge', 'flour sack', 'kitchen sponge', 'steel vase'});
+legend({'acrylic', 'black foam', 'car sponge', 'flour sack', 'kitchen sponge', 'steel vase'});
 
 

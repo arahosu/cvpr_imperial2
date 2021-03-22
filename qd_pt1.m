@@ -14,23 +14,34 @@ for n = 1:size(data.names, 2)
     one_hots(end + 1) = idx;
 end
 
-colours = {'r.', 'g.', 'b.', 'm.', 'k.', 'c.'};
+colours = {'c', 'r', 'g', 'b', 'm', 'k'};
+kshapes = {'.', '|', '*', 'o', '^', 'd'};
+
+%'Distance', 'cityblock'
 
 ds = [];
 for k = 1:6
     opts = statset('Display','final');
-    [idx,C,sumd,D] = kmeans(pvt_data,k,'Distance', 'cityblock' ,'Replicates',5,'Options',opts);
+    [idx,C,sumd,D] = kmeans(pvt_data,k,'Replicates',5,'Options',opts);
     ds(end+1) = sum(sumd);
     
     figure;
     for i = 1:k
-        plot3(pvt_data(idx==i,1),pvt_data(idx==i,2),pvt_data(idx==i,3),char(colours(i)),'MarkerSize',12)
-        hold on;
+        d = pvt_data(idx==i,:);
+        for c = 1:6
+            oh = one_hots(idx==i);
+            dc = d(oh==c,:);
+            if size(dc, 1) > 0
+                plot3(dc(:, 1), dc(:, 2), dc(:, 3), char([colours(c) kshapes(i)]),'MarkerSize',12)
+                hold on;
+            end
+        end
     end
+    title(sprintf("K-Means (K=%d) Clustering of the PVT data", i));
     plot3(C(:,1),C(:,2), C(:,3),'kx','MarkerSize',15,'LineWidth',3)
-    xlabel("pressure");
-    ylabel("vibrations");
-    zlabel("temperature");
+    xlabel("Pressure");
+    ylabel("Vibration");
+    zlabel("Temperature");
     hold off;
     
 end

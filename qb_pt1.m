@@ -1,4 +1,4 @@
-clc; clear; 
+clc; clear; close("all")
 
 load('F0_PVT.mat');
 colours = {'c', 'r', 'g', 'b', 'm', 'k'};
@@ -36,7 +36,7 @@ title('(a)');
 xlabel('standardised pressure');
 ylabel('standardised vibration');
 zlabel('standardised temperature');
-legend({'acrylic vase', 'black foam', 'car sponge',...
+legend({'acrylic', 'black foam', 'car sponge',...
         'flour sack', 'kitchen sponge', 'steel vase',...
         'pc1', 'pc2', 'pc3'});
 axis equal

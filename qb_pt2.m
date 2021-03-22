@@ -1,4 +1,4 @@
-clc; clear;
+clc; clear;close("all")
 
 e = load("F0_electrodes.mat");
 colours = {'c', 'r', 'g', 'b', 'm', 'k'};
@@ -28,6 +28,6 @@ end
 xlabel('PC1');
 ylabel('PC2');
 zlabel('PC3');
-legend({'acrylic vase', 'black foam', 'car sponge',...
+legend({'acrylic', 'black foam', 'car sponge',...
         'flour sack', 'kitchen sponge', 'steel vase'});
 title('(b)');
